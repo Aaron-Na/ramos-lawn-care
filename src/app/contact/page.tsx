@@ -9,6 +9,8 @@ import {
   Send,
   Calendar,
   CheckCircle,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,6 +38,30 @@ export default function ContactPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDay = firstDay.getDay();
+    return { daysInMonth, startingDay };
+  };
+
+  const { daysInMonth, startingDay } = getDaysInMonth(currentMonth);
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const timeSlots = [
+    "9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -176,16 +202,101 @@ export default function ContactPage() {
                   </p>
                   <Button
                     className="w-full bg-green-600 hover:bg-green-700"
-                    onClick={() => {
-                      // Calendly integration would go here
-                      alert(
-                        "Calendly integration placeholder - In production, this opens the scheduling widget"
-                      );
-                    }}
+                    onClick={() => setShowCalendar(!showCalendar)}
                   >
                     <Calendar className="mr-2 h-4 w-4" />
-                    Book Appointment
+                    {showCalendar ? "Hide Calendar" : "Book Appointment"}
                   </Button>
+
+                  {/* Placeholder Calendar */}
+                  {showCalendar && (
+                    <div className="mt-4 bg-white rounded-lg p-4 border border-green-200">
+                      {/* Calendar Header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <button
+                          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+                          className="p-1 hover:bg-green-100 rounded"
+                        >
+                          <ChevronLeft className="h-5 w-5 text-green-600" />
+                        </button>
+                        <h4 className="font-semibold text-gray-800">
+                          {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                        </h4>
+                        <button
+                          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+                          className="p-1 hover:bg-green-100 rounded"
+                        >
+                          <ChevronRight className="h-5 w-5 text-green-600" />
+                        </button>
+                      </div>
+
+                      {/* Day Headers */}
+                      <div className="grid grid-cols-7 gap-1 mb-2">
+                        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+                          <div key={day} className="text-center text-xs font-medium text-gray-500 py-1">
+                            {day}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Calendar Days */}
+                      <div className="grid grid-cols-7 gap-1">
+                        {Array.from({ length: startingDay }).map((_, i) => (
+                          <div key={`empty-${i}`} />
+                        ))}
+                        {Array.from({ length: daysInMonth }).map((_, i) => {
+                          const day = i + 1;
+                          const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+                          const isToday = new Date().toDateString() === date.toDateString();
+                          const isSelected = selectedDate?.toDateString() === date.toDateString();
+                          const isPast = date < new Date(new Date().setHours(0, 0, 0, 0));
+                          const isWeekend = date.getDay() === 0;
+
+                          return (
+                            <button
+                              key={day}
+                              disabled={isPast || isWeekend}
+                              onClick={() => setSelectedDate(date)}
+                              className={`
+                                p-2 text-sm rounded-md transition-colors
+                                ${isPast || isWeekend ? "text-gray-300 cursor-not-allowed" : "hover:bg-green-100 cursor-pointer"}
+                                ${isToday ? "border border-green-500" : ""}
+                                ${isSelected ? "bg-green-600 text-white hover:bg-green-700" : ""}
+                              `}
+                            >
+                              {day}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Time Slots */}
+                      {selectedDate && (
+                        <div className="mt-4 pt-4 border-t">
+                          <p className="text-sm font-medium text-gray-700 mb-2">
+                            Available times for {selectedDate.toLocaleDateString()}:
+                          </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            {timeSlots.map((time) => (
+                              <button
+                                key={time}
+                                className="text-sm py-2 px-3 border border-green-200 rounded-md hover:bg-green-50 hover:border-green-400 transition-colors"
+                                onClick={() => {
+                                  alert(`Demo: You selected ${selectedDate.toLocaleDateString()} at ${time}. In production, this would book your appointment.`);
+                                }}
+                              >
+                                {time}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <p className="text-xs text-gray-500 mt-4 text-center">
+                        Select a date and time for your free consultation
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
