@@ -57,24 +57,24 @@ const services = [
 
 const projects = [
   {
-    title: "Paver Patio Installation",
+    title: "Fire Pit & Patio",
     category: "Hardscaping",
-    image: "/projects/patio.jpg",
+    image: "/paverpatipo.jpeg",
   },
   {
     title: "Complete Landscape Design",
     category: "Landscaping",
-    image: "/projects/landscape.jpg",
+    image: "/landscapedesign.jpeg",
   },
   {
     title: "Wood Fence Installation",
     category: "Fencing",
-    image: "/projects/fence.jpg",
+    image: "/woodfence.jpeg",
   },
   {
-    title: "Fire Pit & Patio",
+    title: "Paver Patio Installation",
     category: "Hardscaping",
-    image: "/projects/firepit.jpg",
+    image: "/patio.jpg",
   },
 ];
 
@@ -219,14 +219,16 @@ export default function Home() {
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className="group overflow-hidden hover:shadow-lg transition-shadow"
+                className="group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
-                <div className="aspect-square bg-gradient-to-br from-green-200 to-green-400 relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Shovel className="h-16 w-16 text-green-600/30" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                <div className="aspect-square relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <Badge className="bg-green-600 mb-2">
                       {project.category}
                     </Badge>
