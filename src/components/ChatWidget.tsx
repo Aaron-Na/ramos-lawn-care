@@ -29,7 +29,7 @@ export function ChatWidget() {
         {
           role: "assistant",
           content:
-            "Thanks for your message! This is a demo chatbot. In the full version, I'd be connected to an AI that can answer your lawn care questions, provide estimates, and help schedule appointments. Would you like to speak with our team directly? Call us at (678) 687-6274!",
+            "Thanks for your message! This is a demo chatbot. In the full version, I'd be connected to an AI that can answer your lawn care questions, provide estimates, and help schedule appointments. Would you like to speak with our team directly? Call us at (404) 754-5182!",
         },
       ]);
     }, 1000);
