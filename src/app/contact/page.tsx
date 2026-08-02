@@ -474,18 +474,27 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Placeholder */}
+      {/* Google Maps */}
       <section className="h-96 bg-gray-200 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-gray-500">
-              Google Maps Integration
-              <br />
-              <span className="text-sm">
-                Serving Atlanta & Surrounding Areas
-              </span>
-            </p>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d212270.5765085429!2d-84.5518!3d33.7490!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f5045d6993098d%3A0x66fede2f990b630b!2sAtlanta%2C%20GA!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Ramos Lawn Care Service Area - Atlanta, GA"
+          className="absolute inset-0"
+        />
+        <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-xs">
+          <div className="flex items-start gap-3">
+            <MapPin className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-gray-900">Ramos Lawn Care</p>
+              <p className="text-sm text-gray-600">Stone Mountain, GA 30087</p>
+              <p className="text-xs text-green-600 mt-1">Serving Atlanta & Surrounding Areas</p>
+            </div>
           </div>
         </div>
       </section>
