@@ -56,10 +56,12 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
+          <SheetTrigger className="md:hidden">
+            <Button variant="ghost" size="icon" asChild>
+              <span>
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </span>
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
